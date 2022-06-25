@@ -34,4 +34,3 @@ function increment() {
   height: 400px;
 }
 </style>
-
