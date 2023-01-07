@@ -1,11 +1,11 @@
 <template>
   <div>
-    <router-link style="width:20%" v-for="item in sd.list" :to="item.path">{{
+    <router-link @click="handleClick(item.id)"   :class='{"active":now==item.id}'   style="width:20%" v-for="item in sd.list" :to="item.path">{{
       item.name
     }}</router-link>
     <router-view></router-view>
   </div>
-  <!-- <h1>{{ msg }}</h1>
+  <!-- <h1>{{ msg }}</h1> :class='now==item.id?"active":""'
   <h1>{{ revseMsg(msg) }}</h1>
   <button @click="setMsg">点击修改</button>
   <img alt="Vue logo" src="./assets/logo.png" /> -->
@@ -20,20 +20,32 @@ function setMsg() {
   msg.value = "老城年皮厚";
   console.log(msg, "vgftfytft");
 }
+const handleClick = (val) => {
+     sd.now = val 
+     console.log(sd.now,'25***')
+}
 const sd = reactive({
+  now:1,
   list: [
     {
+      id: 1,
       path: "/home",
       name: "地图",
     },
     {
+      id: 2,
       path: "/login",
       name: "首页",
     },
     {
+      id: 3,
       path: "/charts",
       name: "图表",
-    },
+    }, {
+      id: 4,
+      path: "/element",
+      name: "表格",
+    }
   ],
 });
 </script>
@@ -43,7 +55,6 @@ const sd = reactive({
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
 
   a {
     display: inline-block;
@@ -52,6 +63,12 @@ const sd = reactive({
     line-height: 24px;
     font-size: 14px;
     text-decoration: none;
+    color: #000;
+
   }
+  .router-link-active{
+    background-color: red;
+  }
+ 
 }
 </style>

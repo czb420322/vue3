@@ -1,12 +1,8 @@
-// @ts-nocheck
 import { createRouter, createWebHashHistory } from "vue-router"
-
-// @ts-ignore
 const home = () => import('../home.vue')
-// @ts-ignore
 const login = () => import("../login.vue")
-
-const charts =()=>import('../charts.vue')
+const element = () => import('../element.vue')
+const charts = () => import('../charts.vue')
 const routes = [
   { path: "/", redirect: "/home" },
   {
@@ -18,10 +14,14 @@ const routes = [
     path: "/login",
     name: "login",
     component: login
-  },{
-      path:'/charts',
-      name:'charts',
-      component:charts,
+  }, {
+    path: '/charts',
+    name: 'charts',
+    component: charts,
+  }, {
+    path: '/element',
+    name: 'element',
+    component: element,
   }
 ]
 
