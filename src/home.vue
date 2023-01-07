@@ -1,10 +1,11 @@
 <template>
-  <p>home</p>
+  <div>
+    <creat_map />
+  </div>
 </template>
-<script>
-export default {
 
-}
+<script setup>
+import creat_map from "./map/index.vue";
 </script>
-<style  scoped>
-</style>
+
+<style lang="scss" scoped></style>
