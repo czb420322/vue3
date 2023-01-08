@@ -1,9 +1,13 @@
 <template>
   <div>
-    <router-link @click="handleClick(item.id)"   :class='{"active":now==item.id}'   style="width:20%" v-for="item in sd.list" :to="item.path">{{
-      item.name
-    }}</router-link>
-    <router-view></router-view>
+    <router-link @click="handleClick(item.id)" :class='{"active":now==item.id}' style="width:20%"
+      v-for="item in sd.list" :to="item.path">{{
+        item.name
+      }}</router-link>
+    <!--分页组件显示中文名称需要在此处引入包裹 -->
+    <el-config-provider :locale="zhCn">
+      <router-view></router-view>
+    </el-config-provider>
   </div>
   <!-- <h1>{{ msg }}</h1> :class='now==item.id?"active":""'
   <h1>{{ revseMsg(msg) }}</h1>
@@ -11,7 +15,9 @@
   <img alt="Vue logo" src="./assets/logo.png" /> -->
 </template>
 <script setup>
+import zhCn from "element-plus/lib/locale/lang/zh-cn"
 import { ref, reactive } from "vue";
+const now = ref(1);
 let msg = ref("老城主帅!");
 function revseMsg(value) {
   return value.split("").reverse().join("");
@@ -21,11 +27,10 @@ function setMsg() {
   console.log(msg, "vgftfytft");
 }
 const handleClick = (val) => {
-     sd.now = val 
-     console.log(sd.now,'25***')
+  now.value = val
 }
 const sd = reactive({
-  now:1,
+
   list: [
     {
       id: 1,
@@ -66,9 +71,10 @@ const sd = reactive({
     color: #000;
 
   }
-  .router-link-active{
+
+  .router-link-active {
     background-color: red;
   }
- 
+
 }
 </style>
