@@ -21,7 +21,8 @@
           "num": 10,
           "small_image": "https://ddimg.ddxq.mobi/becc0e6b257781528108118451.jpg!maicai.product.list",
           "buynum": 1,
-          "type": "零食"
+          "type": "零食",
+          "shake":false
         },
         {
           "id": 2,
@@ -30,7 +31,8 @@
           "num": 100,
           "small_image": "https://img.ddimg.mobi/product/c7cfa4f41f6e31545281584531.jpg!maicai.product.list",
           "buynum": 1,
-          "type": "蔬菜"
+          "type": "蔬菜",
+          "shake":false
         },
         {
           "id": 3,
@@ -39,7 +41,8 @@
           "price": 9.9,
           "small_image": "https://ddimg.ddxq.mobi/c4c87775684a31533809117568.jpg!maicai.product.list",
           "buynum": 1,
-          "type": "蔬菜"
+          "type": "蔬菜",
+          "shake":false
         },
         {
           "id": 4,
@@ -47,7 +50,8 @@
           "price": 49.9,
           "small_image": "https://img.ddimg.mobi/product/179c2d79f590a1563869550466.png!deliver.product.list",
           "buynum": 1,
-          "type": "零食"
+          "type": "零食",
+          "shake":false
         },
         {
           "id": 5,
@@ -55,7 +59,8 @@
           "price": 5.5,
           "buynum": 1,
           "small_image": "https://img.ddimg.mobi/product/8fb970045ec721548094494171.jpg!deliver.product.list",
-          "type": "酒水"
+          "type": "酒水",
+          "shake":false
         },
         {
           "id": 6,
@@ -63,7 +68,8 @@
           "price": 4.9,
           "buynum": 1,
           "small_image": "https://ddimg.ddxq.mobi/0f5f617f1514884411854.jpg!maicai.product.list",
-          "type": "零食"
+          "type": "零食",
+          "shake":false
         },
         {
           "id": 7,
@@ -71,7 +77,8 @@
           "price": 7.9,
           "buynum": 1,
           "small_image": "https://ddimg.ddxq.mobi/202c7fbf0402281539172014931.jpg!maicai.product.list",
-          "type": "蔬菜"
+          "type": "蔬菜",
+          "shake":false
         },
         {
           "id": 8,
@@ -79,7 +86,8 @@
           "price": 7.8,
           "buynum": 1,
           "small_image": "https://ddimg.ddxq.mobi/5cc519fb57d171504748643856.jpg!maicai.product.list",
-          "type": "零食"
+          "type": "零食",
+          "shake":false
         },
         {
           "id": 9,
@@ -88,7 +96,8 @@
           "num": 10,
           "small_image": "https://ddimg.ddxq.mobi/becc0e6b257781528108118451.jpg!maicai.product.list",
           "buynum": 1,
-          "type": "零食"
+          "type": "零食",
+          "shake":false
         },
         {
           "id": 10,

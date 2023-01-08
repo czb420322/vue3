@@ -6,7 +6,7 @@
                 class="input_style">
             <div id="map"></div>
             <div class="logo">
-                <div> 经度:<span>{{ userlocation.lng }}</span></div>
+                <div style="margin-left:12px"> 经度:<span>{{ userlocation.lng }}</span></div>
                 <div> 维度:<span>{{ userlocation.lat }}</span></div>
             </div>
         </div>

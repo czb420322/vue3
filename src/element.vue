@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-import newShake from './map/shake.vue'
+import newShake from './dialog/shake.vue'
 
 </script>
 
