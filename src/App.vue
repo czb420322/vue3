@@ -50,6 +50,10 @@ const sd = reactive({
       id: 4,
       path: "/element",
       name: "表格",
+    },{
+      id:5,
+      path:'/communication',
+      name:"组件通信"
     }
   ],
 });

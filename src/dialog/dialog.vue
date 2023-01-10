@@ -1,7 +1,6 @@
 <template>
     <el-dialog @open="handleOpen" v-model="centerDialogVisible" title="弹窗" width="30%" center>
-       <div>
-           
+       <div> 
        </div>
         <template #footer>
             <span class="dialog-footer">
