@@ -15,6 +15,7 @@
 
 <script>
 import { reactive, toRefs, onMounted, nextTick } from "vue";
+import { useRoute } from "vue-router";
 import { MP } from "./getAkmap";
 export default {
     setup() {
@@ -23,7 +24,7 @@ export default {
             address_detail: null, //详细地址
             userlocation: { lng: null, lat: null }
         });
-
+        const route =useRoute()
         const updateMap = {
             initMap() {
                 //初始化地图
@@ -128,11 +129,12 @@ export default {
                     }
                 });
             });
-
+            console.log(route.query.menuCode,'132***')
         });
         return {
             ...toRefs(state),
             ...updateMap,
+            ...route
         };
     },
 };

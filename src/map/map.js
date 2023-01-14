@@ -328,7 +328,6 @@ const mixins = {
                 return object
             }
 		},
-
         //定位位置
         zuobiao2Pixel(point){
           var point = new BMap.Point(point.lng,point.lat);
@@ -341,8 +340,6 @@ const mixins = {
             // })
           },500)
         },
-
-
 
         //创建device页面的海量点
         createmagnanCase(list) {

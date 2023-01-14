@@ -40,7 +40,7 @@ const sd = reactive({
     {
       id: 2,
       path: "/login",
-      name: "首页",
+      name: "pinia",
     },
     {
       id: 3,
