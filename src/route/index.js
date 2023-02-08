@@ -26,6 +26,10 @@ const routes = [
     path:'/communication',
     name:'communication',
     component:()=>import('../communication.vue')
+  },{
+    path:'/vueuse',
+    name:'vueuse',
+    component:()=>import('../vueUse.vue')
   }
 ]
 

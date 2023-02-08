@@ -1,6 +1,6 @@
 <template>
   <div>
-    <router-link @click="handleClick(item.id)" :class='{"active":now==item.id}' style="width:20%"
+    <router-link @click="handleClick(item.id)" :class='{"active":now==item.id}' style="width:15%"
       v-for="item in sd.list" :to="item.path">{{
         item.name
       }}</router-link>
@@ -54,6 +54,10 @@ const sd = reactive({
       id:5,
       path:'/communication',
       name:"组件通信"
+    },{
+      id:6,
+      path:'/vueuse',
+      name:"vueHooks"
     }
   ],
 });
