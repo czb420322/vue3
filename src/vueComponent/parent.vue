@@ -18,7 +18,6 @@
 </template>
   
 <script setup>
-import { ref, reactive } from 'vue'
 import props from './prop.vue'
 import emit from './emit.vue';
 import exposes from './expose.vue';

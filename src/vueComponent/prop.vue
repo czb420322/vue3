@@ -5,7 +5,6 @@
 </template>
 
 <script setup>
-import { defineProps } from 'vue'
 //接收父组件传过来的值！
 const props = defineProps({
   title: {
@@ -16,5 +15,5 @@ const props = defineProps({
   }
 });
 //打印一下 接收父组件的值
-console.log(props.title, props.tit) //父的值
+console.log(props.title, props.tit,'18****') //父的值
 </script>

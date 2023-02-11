@@ -68,11 +68,11 @@ const handleSelectionChange = (val) => {
     multipleSelection.value = val;
 }
 const handleSizeChange = (val) => {
-    currentPage = 1
+    currentPage.value = 1
     getNewList()
 }
 const handleCurrentChange = (val) => {
-    currentPage = val
+    currentPage.value = val
     getNewList()
 }
 const handleShake = (row) => {

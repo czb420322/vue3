@@ -4,7 +4,6 @@
   </template>
   
   <script  setup>
-  import {defineEmits,defineExpose} from 'vue'
   //先定义一下子 在发送值
   const  emits = defineEmits(['getChili','setChil']);
   const  toEmits = () => {

@@ -3,7 +3,6 @@
 </template>
 
 <script  setup>
-import { ref, defineExpose, reactive } from 'vue'
 let xiaoZhi = reactive({
     stator: '小志',
     age: 27
