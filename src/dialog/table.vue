@@ -1,0 +1,184 @@
+<!-- 项目的子组件 封装后的表格、分页 -->
+<template>
+    <!-- 表格数据 Start-->
+    <el-table :data="tableData" height="200" style="width: 100%" border>
+        <!-- 循环表头 template是不会渲染为dom 在小程序中是block  -->
+        <template v-for="(item, index) in tableHeader" :key="index">
+            <el-table-column :prop="item.prop" :label="item.label" :align="item.align || 'center'"
+                :show-overflow-tooltip="item.overHidden || false" :min-width="item.minWidth || '100px'"
+                :sortable="item.sortable || false" :type="item.type || 'normal'" :fixed="item.fixed"
+                :width="item.width || ''">
+                <!-- 自定义列 开关-->
+                <template #default="scope" v-if="item.dataType === 'switch'">
+                    <el-switch v-model="scope.row.status" active-text="开" inactive-text="关" active-color="#13ce66"
+                        inactive-color="#ff4949" @change="changeSwitchStatus(scope.row.id, scope.row.status)" />
+                </template>
+                <!-- 加密手机号 -->
+                <template #default="scope" v-if="item.dataType === 'phone'">{{ encryptionPhone(scope.row) }}</template>
+                <!-- 自定义列 按钮 -->
+                <template #default="scope" v-if="item.dataType === 'operate'">
+                    <el-button size="small" @click="handleEdit(scope.$index, scope.row)">Edit</el-button>
+                    <el-button size="small" type="danger" @click="handleDelete(scope.$index, scope.row)">Delete</el-button>
+                    <el-button size="small" @click="handleEdit(scope.$index, scope.row)">Edit</el-button>
+                    <el-button size="small" type="danger" @click="handleDelete(scope.$index, scope.row)">Delete</el-button>
+                </template>
+            </el-table-column>
+        </template>
+
+        <!-- 自定义列 按钮 -->
+        <el-table-column fixed="right" label="操作列" :width="operateWidth" v-if="isOperate">
+            <template #default="scope">
+                <el-button size="small" @click="handleEdit(scope.$index, scope.row)">Edit</el-button>
+                <el-button size="small" type="danger" @click="handleDelete(scope.$index, scope.row)">Delete</el-button>
+            </template>
+        </el-table-column>
+    </el-table>
+    <!-- 表格数据 End-->
+
+    <!-- 分页 Start-->
+    <el-pagination :page-sizes="pageSizesArr" :layout="layout" :total="total" @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"></el-pagination>
+<!-- 分页 End--></template>
+  
+<script setup>
+import { defineProps, defineEmits, onMounted, reactive } from "vue";
+
+const emits = defineEmits([
+    "handleSizeChange",
+    "handleCurrentChange",
+    "handleChangeSwitchStatus",
+]);
+// 表格数据格式化
+const stateFormat = (row, column, cellValue, index) => {
+    // console.log("😂👨🏾‍❤️‍👨🏼==>： ", row.phone);
+    // if (cellValue != null) {
+    //   const rol = row.phone.slice(0, 3);
+    //   const ral = row.phone.slice(7, 12);
+    //   const pho = rol + "****" + ral;
+    //   return pho;
+    // }
+};
+//开关改变事件
+const changeSwitchStatus = (rowId, _boolean) => {
+    emits("handleChangeSwitchStatus", rowId, _boolean);
+};
+// 操作列 编辑
+const handleEdit = (index, row) => {
+    console.log(" index🚀", index);
+    console.log(" row🚀", row);
+};
+// 操作列 删除
+const handleDelete = (index, row) => {
+    console.log(" index🚀", index);
+    console.log(" row🚀", row);
+};
+
+// 页数改变的时候触发的事件
+const handleSizeChange = (val) => {
+    emits("handleSizeChange", val);
+};
+// 当前页改变的时候触发的事件
+const handleCurrentChange = (val) => {
+    emits("handleCurrentChange", val);
+};
+// 手机号格式化
+const encryptionPhone = (row) => {
+    // console.log(row);
+    let phone = row.phone;
+    if (phone != null) {
+        const rol = phone.slice(0, 3);//用于截取数组，并返回截取到的新的数组，数组与字符串对象都使用(⚠️：对原数组不会改变)
+        const ral = phone.slice(7, 12);
+        const pho = rol + "****" + ral;
+        return pho;
+    }
+};
+const props = defineProps({
+    // 表格显示的数据
+    tableData: {
+        type: Array,
+        default: function () {
+            return [];
+        },
+    },
+    // 表头数据
+    tableHeader: {
+        type: Array,
+        default: function () {
+            return [];
+        },
+    },
+    // 控制操作列是否显示
+    isOperate: {
+        type: Boolean,
+        default: function () {
+            return false;
+        },
+    },
+    operateWidth: {
+        type: Number,
+        default: () => 200,
+    },
+    // 总页数
+    total: {
+        type: Number,
+        // 必传类型
+        required: true,
+        default: 0,
+    },
+
+    // 分页的页容量数组
+    pageSizesArr: {
+        type: Array,
+        default() {
+            return [10, 20, 30, 50];
+        },
+    },
+    // 分页的布局
+    layout: {
+        type: String,
+        default: "total, sizes, prev, pager, next, jumper",
+    },
+});
+
+onMounted(() => {
+    // console.log("！这里输出😂👨🏾‍❤️‍👨🏼==>： ", props.tableData);
+    // console.log("表格🚀", props.tableData, props.tableHeader, props.isOperate);
+    // console.log("页容量🚀", props.total);
+});
+</script>
+  
+<style lang="scss">
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.el-switch__label--left {
+    position: relative;
+    left: 45px;
+    color: #fff;
+    z-index: -1111;
+}
+
+.el-switch__core {
+    width: 50px !important;
+}
+
+.el-switch__label--right {
+    position: relative;
+    right: 46px;
+    color: #fff;
+    z-index: -1111;
+}
+
+.el-switch__label--right.is-active {
+    z-index: 1111;
+    color: #fff !important;
+}
+
+.el-switch__label--left.is-active {
+    z-index: 1111;
+    color: #fff !important;
+}
+</style>
+  
