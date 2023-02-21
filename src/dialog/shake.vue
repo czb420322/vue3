@@ -69,6 +69,7 @@ const handleSelectionChange = (val) => {
 }
 const handleSizeChange = (val) => {
     currentPage.value = 1
+    pageSize.value=val;
     getNewList()
 }
 const handleCurrentChange = (val) => {

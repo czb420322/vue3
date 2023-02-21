@@ -1,19 +1,17 @@
 <template>
   <div>
-    <router-link @click="handleClick(item.id)" :class='{"active":now==item.id}' style="width:15%"
-      v-for="item in sd.list" :to="item.path">{{
-        item.name
-      }}</router-link>
+    <router-link @click="handleClick(item.id)" :class='{ "active": now == item.id }' v-for="item in sd.list" :to="item.path">{{
+      item.name
+    }}</router-link>
     <!--分页组件显示中文名称需要在此处引入包裹 -->
     <el-config-provider :locale="zhCn">
       <router-view></router-view>
     </el-config-provider>
   </div>
-  <!-- <h1>{{ msg }}</h1> :class='now==item.id?"active":""'
+<!-- <h1>{{ msg }}</h1> :class='now==item.id?"active":""'
   <h1>{{ revseMsg(msg) }}</h1>
   <button @click="setMsg">点击修改</button>
-  <img alt="Vue logo" src="./assets/logo.png" /> -->
-</template>
+  <img alt="Vue logo" src="./assets/logo.png" /> --></template>
 <script setup>
 import zhCn from "element-plus/lib/locale/lang/zh-cn"
 import { ref, reactive } from "vue";
@@ -50,14 +48,18 @@ const sd = reactive({
       id: 4,
       path: "/element",
       name: "表格",
-    },{
-      id:5,
-      path:'/communication',
-      name:"组件通信"
-    },{
-      id:6,
-      path:'/vueuse',
-      name:"vueHooks"
+    }, {
+      id: 5,
+      path: '/communication',
+      name: "组件通信"
+    }, {
+      id: 6,
+      path: '/vueuse',
+      name: "vueHooks"
+    }, {
+      id: 7,
+      path: '/vueTable',
+      name: 'vueTable'
     }
   ],
 });
@@ -71,12 +73,13 @@ const sd = reactive({
 
   a {
     display: inline-block;
-    // width: 20%;
+    margin: 0 20px;
     height: 24px;
     line-height: 24px;
     font-size: 14px;
     text-decoration: none;
     color: #000;
+
 
   }
 

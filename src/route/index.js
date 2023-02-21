@@ -30,6 +30,10 @@ const routes = [
     path:'/vueuse',
     name:'vueuse',
     component:()=>import('../vueUse.vue')
+  },{
+    path:'/vueTable',
+    name:'vueTable',
+    component:()=>import('../dialog/table.vue')
   }
 ]
 
