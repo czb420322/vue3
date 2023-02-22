@@ -1,34 +1,46 @@
 <template>
     <div>
-        <vueIndex :tableData="tableData" :total="total" :pageSizesTotal='pageSizesTotal'  :tableHeader="tableHeader" :currentPage="currentPage"
-            :pageSize="pageSize" @handleCurrentChange="handleCurrentChange" @handleSizeChange="handleSizeChange" />
+        <!-- v-bind=obj设置一个对象,把单向传输的所有的数据一次性传递给子组件 -->
+        <vueIndex v-bind="obj" @handleCurrentChange="handleCurrentChange" @handleSizeChange="handleSizeChange" />
+        <sliderDialog v-if="isDialog" />
     </div>
 </template>
 
 <script setup>
+import { storeToRefs } from 'pinia';
+import { useCounterStore } from '../store';
+import { reactive } from 'vue';
 import axios from 'axios';
 import vueIndex from '../table/index.vue';
-const tableData = ref([]);
-const total = ref(0)
-const currentPage = ref(1);
-const pageSize = ref(4)
-const pageSizesTotal=ref([4,8,12,16,20])
-const tableHeader = ref([{ prop: 'name', label: '名字' }, { prop: 'small_image', label: '图片' }, { prop: 'price', label: '价格' }, { prop: 'act', label: '操作' }])
+import sliderDialog from './sliderDialog.vue';
+const store = useCounterStore()
+const {isDialog} =storeToRefs(store)
+const obj = reactive({
+    operateWidth: 300,
+    tableData: [],
+    total: 0,
+    currentPage: 1,
+    pageSize: 4,
+    pageSizesTotal: [4, 8, 12, 16, 20],
+    tableHeader: [{ prop: 'name', label: '名字' }, { prop: 'small_image', label: '图片' }, { prop: "phone", label: '手机号码' }, { prop: "nowtime", label: '时间' }, { prop: 'price', label: '价格' }, { prop: 'act', label: '操作' }]
+})
 const getNewList = () => axios.get('/public/db.json').then((res) => {
-    tableData.value = res.data.imgs;
-    total.value = res.data.imgs.length;
+    obj.tableData = res.data.imgs;
+    obj.total = res.data.imgs.length;
+    // tableData.value = res.data.imgs;
+    // total.value = res.data.imgs.length;
 })
 //改变条数
 const handleSizeChange = (val) => {
-    console.log(val,'23****')
-    currentPage.value = 1
-    pageSize.value=val;
+    console.log(val, '23****')
+    obj.currentPage = 1
+    obj.pageSize = val;
     getNewList();
 }
 //改变页数
 const handleCurrentChange = (val) => {
-    console.log(val,'27***')
-    currentPage.value = val
+    console.log(val, '27***')
+    obj.currentPage = val
     getNewList()
 }
 onMounted(() => {

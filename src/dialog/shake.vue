@@ -39,7 +39,7 @@
             :small="small" :disabled="disabled" :background="background"
             layout="total, sizes, prev, pager, next, jumper" :total="total" @size-change="handleSizeChange"
             @current-change="handleCurrentChange" />
-        <dialogVue :isOpen="isOpen" v-if="isOpen"/>
+        <dialogVue :isOpen="isOpen" ref="bigDog"/>
     </div>
 </template>
 
@@ -58,6 +58,7 @@ const background = ref(false)
 const small = ref(false)
 const disabled = ref(false)
 const isOpen = ref(false)
+const bigDog = ref(null)
 const multipleTableRef = ref(null)//取代之前通过ref绑定后这里使用$refs.table来操作bom元素this.$refs.table.toggleRowSelection(row);
 const getNewList = () => axios.get('/public/db.json').then((res) => {
     tableData.value = res.data.imgs;
@@ -96,8 +97,9 @@ const shakeAnimation = () => {
     }, 820);
 }
  const handleAdd =()=>{
-    console.log("98***")
-    isOpen.value = true
+    console.log(bigDog.value.centerDialogVisible,"98***")  
+    bigDog.value.centerDialogVisible = true;
+    isOpen.value = true;
  }
 onMounted(() => {
     getNewList()
