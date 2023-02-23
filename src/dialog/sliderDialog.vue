@@ -1,8 +1,10 @@
 <template>
-    <div class="bigDialog">
+    <div class="bigDialog" id="bigDialog">
+        <Close class="close" @click="handleClose" />
         dsbijfhweijhiewhiuuewuiogjiwoeujiuoiujio
+
     </div>
-<!-- <el-dialog class="bigDialog" @open="handleOpen" v-model="sliderDialogVisible" title="弹窗" width="30%" center>
+    <!-- <el-dialog class="bigDialog" @open="handleOpen" v-model="sliderDialogVisible" title="弹窗" width="30%" center>
         <div>
             弹窗的主页面,需要使用的方法以已经注册到全局的main.js
         </div>
@@ -14,17 +16,36 @@
                 </el-button>
             </span>
         </template>
-    </el-dialog> --></template>
+    </el-dialog> -->
+</template>
 
 <script setup>
-const sliderDialogVisible = ref(false);
+const emit = defineEmits(['hclose'])
 const handleOpen = () => { };
-const handleClose = () => { }
+const handleClose = () => {
+    emit('hclose', false)
+}
 </script>
 
 <style lang="scss" scoped>
 .bigDialog {
-    position: fixed;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 100%;
     border: 1px solid red;
+    z-index: 3;
+    background-color: #b2b4a7;
+    transition: all 5s ease-out ;
+    transition-property: width;
+    transition-duration: 2s;
+
+    // display: none;
+    .close {
+        font-size: 30px;
+        position: fixed;
+        right: 0;
+        cursor: pointer;
+    }
 }
 </style>

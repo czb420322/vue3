@@ -1,8 +1,9 @@
 <template>
     <div>
         <!-- v-bind=obj设置一个对象,把单向传输的所有的数据一次性传递给子组件 -->
-        <vueIndex v-bind="obj" @handleCurrentChange="handleCurrentChange" @handleSizeChange="handleSizeChange" />
-        <sliderDialog v-if="isDialog" />
+        <vueIndex @handleDom="handleDom" v-bind="obj" @handleCurrentChange="handleCurrentChange"
+            @handleSizeChange="handleSizeChange" />
+        <sliderDialog id="big" ref="bigDialog" v-if="isDialog" @hclose="hclose" />
     </div>
 </template>
 
@@ -14,7 +15,9 @@ import axios from 'axios';
 import vueIndex from '../table/index.vue';
 import sliderDialog from './sliderDialog.vue';
 const store = useCounterStore()
-const {isDialog} =storeToRefs(store)
+const { isDialog } = storeToRefs(store)
+const bigDialog = ref()
+console.log(bigDialog, '19***')
 const obj = reactive({
     operateWidth: 300,
     tableData: [],
@@ -42,6 +45,18 @@ const handleCurrentChange = (val) => {
     console.log(val, '27***')
     obj.currentPage = val
     getNewList()
+}
+const hclose = (val) => {
+    console.log(val);
+    store.$patch((state) => {
+        state.isDialog = val
+    })
+}
+const handleDom = () => {
+    let dom = document.getElementById("big")
+    // dom.style.display = 'block';
+    dom.style.top = "25px"
+    console.log(dom, '59**')
 }
 onMounted(() => {
     getNewList()

@@ -64,12 +64,13 @@
 
     <!-- 分页 Start-->
     <el-pagination :current-page="currentPage" :page-size="pageSize" :page-sizes="pageSizesTotal" :small="small"
-        :disabled="disabled" :background="background" layout="total, sizes, prev, pager, next, jumper" :total="total"
-        @size-change="handleSizeChange" @current-change="handleCurrentChange" />
+        layout="total, sizes, prev, pager, next, jumper" :total="total" @size-change="handleSizeChange"
+        @current-change="handleCurrentChange" />
 </template>
 <!-- 分页 End-->
 
 <script setup>
+import { nextTick } from 'vue';
 // import { storeToRefs } from 'pinia';
 import { useCounterStore } from '../store';
 import { defineProps, defineEmits, onMounted, reactive } from "vue";
@@ -80,6 +81,7 @@ const emits = defineEmits([
     "handleSizeChange",
     "handleCurrentChange",
     "handleChangeSwitchStatus",
+    "handleDom"
 ]);
 //开关改变事件
 const changeSwitchStatus = (rowId, _boolean) => {
@@ -87,15 +89,24 @@ const changeSwitchStatus = (rowId, _boolean) => {
 };
 // 操作列 编辑
 const handleEdit = (index, row) => {
+    console.log("92*****")
     //调用pinia的action的方法
     user.changeDialog()
-    console.log(" index🚀", index);
-    console.log(" row🚀", row);
+    nextTick(() => {
+        emits('handleDom')
+    })
+    /*       
+    store.$patch((state) => {
+        state.baseUrl = 'https://www.jd.com/'
+        state.ipList[0] = '192.168.10.222'
+      })
+
+    */
 };
 // 操作列 删除
 const handleDelete = (index, row) => {
-    console.log(" index🚀", index);
-    console.log(" row🚀", row);
+    // console.log(" index🚀", index);
+    // console.log(" row🚀", row);
 };
 
 // 页数改变的时候触发的事件
@@ -109,14 +120,14 @@ const handleCurrentChange = (val) => {
 
 // 手机号格式化
 const encryptionPhone = (row) => {
-    console.log(row.phone, "110***");
+    // console.log(row.phone, "110***");
     let phone = String(row.phone);
     //这里的用到数组的slice的截取方法,一定要注意数据的类型是字符串或者是数组的类型
     if (phone != null) {
         const rol = phone.slice(0, 3); //用于截取数组，并返回截取到的新的数组，数组与字符串对象都使用(⚠️：对原数组不会改变)
         const ral = phone.slice(7, 12);
         const pho = rol + "****" + ral;
-        console.log(pho, "116***");
+        // console.log(pho, "116***");
         return pho;
     }
 };
@@ -125,7 +136,7 @@ const encryptionPrice = (row) => {
     //格式化价格的时候必须是数字类型
     let price = row.price;
     if ((price ?? '') !== '') {
-        console.log(price, '127***');
+        // console.log(price, '127***');
         let prices = `${Number(price).toLocaleString()}`;
         return prices
     }
@@ -200,9 +211,9 @@ const props = defineProps({
 });
 
 onMounted(() => {
-    console.log("！这里输出😂👨🏾‍❤️‍👨🏼==>： ", props.tableData);
-    console.log("表格🚀", props.tableData, props.tableHeader, props.isOperate);
-    console.log("页容量🚀", props.total);
+    // console.log("！这里输出😂👨🏾‍❤️‍👨🏼==>： ", props.tableData);
+    // console.log("表格🚀", props.tableData, props.tableHeader, props.isOperate);
+    // console.log("页容量🚀", props.total);
 });
 </script>
 
