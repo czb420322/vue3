@@ -8,8 +8,12 @@ export const useCounterStore = defineStore('counter', {
                 age: 3
             },
             storeArray: [],
-            isDialog: false
+            isDialog: false,
+            isTrans:false
         }
+    },
+    getters:{
+
     },
     actions: {
         add() {
@@ -18,6 +22,12 @@ export const useCounterStore = defineStore('counter', {
         //修改dialog的状态
         changeDialog() {
             this.isDialog = true
+        },
+        changeTrans(){
+            this.isTrans = true
+        },
+        recoverTrans(){
+            this.isTrans = false
         }
     }
 })
