@@ -34,6 +34,10 @@ const routes = [
     path:'/vueTable',
     name:'vueTable',
     component:()=>import('../dialog/table.vue')
+  },{
+    path:'/animate',
+    name:'animate',
+    component:()=>import('../animate.vue')
   }
 ]
 

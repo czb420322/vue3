@@ -62,6 +62,10 @@ const sd = reactive({
       id: 7,
       path: '/vueTable',
       name: 'vueTable'
+    },{
+      id:8,
+      path:'/animate',
+      name:'animate'
     }
   ],
 });

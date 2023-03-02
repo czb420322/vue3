@@ -1,7 +1,5 @@
 <template>
   <div class="content">
-    <!-- <button @click="increment">+1</button>
-      {{ state.count }} -->
     <div class="leftDiv">
       <div class="leftDiv_top">
         <div class="leftDiv_top_left">
