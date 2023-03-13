@@ -3,7 +3,7 @@
         <!-- v-bind=obj设置一个对象,把单向传输的所有的数据一次性传递给子组件 -->
         <vueIndex @handleDom="handleDom" v-bind="obj" @handleCurrentChange="handleCurrentChange"
             @handleSizeChange="handleSizeChange" />
-        <sliderDialog id="big" ref="bigDialog" v-if="isDialog" @hclose="hclose" />
+        <sliderDialog  class="animated bounceInUp" id="big" ref="bigDialog" v-if="isDialog" @hclose="hclose" />
     </div>
 </template>
 
@@ -63,4 +63,10 @@ onMounted(() => {
 })
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+@import url("@/assets/css/animate.css");
+.animated{
+    transition-delay: 5000ms;
+}
+
+</style>

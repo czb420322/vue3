@@ -35,6 +35,9 @@
     </div>
     <p class='flip' @click="huadong">请点击这里</p>
   </div>
+  <div>
+    <el-input></el-input>
+  </div>
 </template>
 
 <script setup>

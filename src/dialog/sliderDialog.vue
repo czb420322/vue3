@@ -1,6 +1,6 @@
 <template>
     <div class="bigDialog" id="bigDialog">
-        <Close class="close" @click="handleClose" />
+        <Close class="close animated" @click="handleClose" />
         dsbijfhweijhiewhiuuewuiogjiwoeujiuoiujio
 
     </div>
@@ -23,11 +23,14 @@
 const emit = defineEmits(['hclose'])
 const handleOpen = () => { };
 const handleClose = () => {
+    let aa = document.getElementById('bigDialog');
+    console.log(aa, '27***')
     emit('hclose', false)
 }
 </script>
 
 <style lang="scss" scoped>
+@import url("@/assets/css/animate.css");
 .bigDialog {
     position: absolute;
     height: 100%;
@@ -36,7 +39,7 @@ const handleClose = () => {
     border: 1px solid red;
     z-index: 3;
     background-color: #b2b4a7;
-    transition: all 5s ease-out ;
+    transition: all 5s ease-out;
     transition-property: width;
     transition-duration: 2s;
 
@@ -47,5 +50,4 @@ const handleClose = () => {
         right: 0;
         cursor: pointer;
     }
-}
-</style>
+}</style>
