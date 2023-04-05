@@ -38,11 +38,32 @@
   <div>
     <el-input></el-input>
   </div>
+  <div v-for="{ id, name } in newData" :key="name + 1">
+    {{ id }} : {{ name }}
+  </div>
+  <div>
+    <newSlot>
+      <!-- 用来展示组件的slot的内容的信息-->
+      <span>名字:</span>
+      <el-input />
+      <!-- <span slot="centers">1233555</span> -->
+    </newSlot>
+  </div>
 </template>
 
 <script setup>
 import $ from 'jquery'
 import { reactive, nextTick, getCurrentInstance } from "vue";
+import newSlot from './components/slot.vue';
+const newData = reactive([
+  {
+    id: 1,
+    name: "老王"
+  }, {
+    id: 2,
+    name: "小王"
+  }
+])
 const { proxy } = getCurrentInstance()
 const flag = ref(false)
 const state = reactive({ count: 0 });
