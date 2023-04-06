@@ -42,18 +42,33 @@
     {{ id }} : {{ name }}
   </div>
   <div>
-    <newSlot>
+    <newSlot ref="lg">
       <!-- 用来展示组件的slot的内容的信息-->
       <span>名字:</span>
       <el-input />
       <!-- <span slot="centers">1233555</span> -->
     </newSlot>
   </div>
+  <div>
+    <el-button @click="changeFlag">显示</el-button>
+    <el-dialog v-model="statu" title="Warning" width="30%"  align-center>
+      <span>Open the dialog from the center from the screen</span>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="statu = false">Cancel</el-button>
+          <el-button type="primary" @click="statu = false">
+            Confirm
+          </el-button>
+        </span>
+      </template>
+    </el-dialog>
+  </div>
 </template>
 
 <script setup>
+import { statu, changeFlag } from "./globalMix/index"
 import $ from 'jquery'
-import { reactive, nextTick, getCurrentInstance } from "vue";
+import { reactive, nextTick, getCurrentInstance,onMounted } from "vue";
 import newSlot from './components/slot.vue';
 const newData = reactive([
   {
@@ -66,6 +81,12 @@ const newData = reactive([
 ])
 const { proxy } = getCurrentInstance()
 const flag = ref(false)
+const lg=ref(null)
+onMounted(() => {
+  console.log(lg.value.aa,lg.value.tt);
+  lg.value.bb();
+  lg.value.cc()
+})
 const state = reactive({ count: 0 });
 const obj = reactive({
   nested: { count: 0 },
@@ -145,5 +166,15 @@ p.flip {
 .panel {
   height: 120px;
   display: none;
+}
+
+.dialog-footer button:first-child {
+  margin-right: 10px;
+}
+
+.el-overlay-dialog {
+  :deep(.el-dialog__title) {
+    text-align: left;
+  }
 }
 </style>
