@@ -22,6 +22,10 @@
         <div></div>
       </div>
     </div>
+    总数：{{ cartData.allNum}}
+    <div v-for="{ name } in cartData.cartList">
+      {{ name }}
+    </div>
   </div>
   <div style="border:1px solid red;">
     <el-button @click=handleShow type="button" id="id-button-show">显示</el-button>
@@ -51,7 +55,7 @@
   </div>
   <div>
     <el-button @click="changeFlag">显示</el-button>
-    <el-dialog v-model="statu" title="Warning" width="30%"  align-center>
+    <el-dialog v-model="statu" title="Warning" width="30%" align-center>
       <span>Open the dialog from the center from the screen</span>
       <template #footer>
         <span class="dialog-footer">
@@ -66,10 +70,12 @@
 </template>
 
 <script setup>
+import { useCartStore } from "./store/newCart.js";
 import { statu, changeFlag } from "./globalMix/index"
 import $ from 'jquery'
-import { reactive, nextTick, getCurrentInstance,onMounted } from "vue";
+import { reactive, nextTick, getCurrentInstance, onMounted } from "vue";
 import newSlot from './components/slot.vue';
+const cartData = useCartStore()
 const newData = reactive([
   {
     id: 1,
@@ -81,9 +87,9 @@ const newData = reactive([
 ])
 const { proxy } = getCurrentInstance()
 const flag = ref(false)
-const lg=ref(null)
+const lg = ref(null)
 onMounted(() => {
-  console.log(lg.value.aa,lg.value.tt);
+  console.log(lg.value.aa, lg.value.tt);
   lg.value.bb();
   lg.value.cc()
 })

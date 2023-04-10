@@ -5,12 +5,16 @@ import { resolve } from 'path'; // 编辑器提示 path 模块找不到，可以
 import AutoImport from 'unplugin-auto-import/vite'//
 export default defineConfig({
   plugins: [vue({
-    reactivityTransform:true//$语法糖的开启
+    reactivityTransform: true//$语法糖的开启
   }), AutoImport({ imports: ['vue', 'vue-router', 'vuex'] })],//可以自动导入vue的相关的api的函数
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src')    // 配置别名；将 @ 指向'src'目录
     }
+  },
+  
+  chainWebpack: config => {
+    config.resolve.alias.set('@$', resolve('src'))
   },
   configureWebpack: {},
   server: {

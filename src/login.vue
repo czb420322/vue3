@@ -5,15 +5,22 @@
     {{ count }}
     <vueStore />
     <el-button @click="handleAdd">加1</el-button>
+
   </div>
 
 </template>
 <script setup>
+import { useCartStore } from './store/newCart.js';
 import {ref,onMounted } from 'vue'
 import vueStore from './vueStore/index.vue'
 import { useRouter ,useRoute} from 'vue-router'
 import { storeToRefs } from "pinia";
 import { useCounterStore } from "./store/index"
+const cartData= useCartStore()
+cartData.addCartNum({
+  name:"电脑",
+  id:2
+})
 const store = useCounterStore()
 //结构store的数据,变成响应式的数据
 const { count } = storeToRefs(store)
