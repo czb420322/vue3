@@ -42,11 +42,12 @@ const sd = reactive({
       path: "/login",
       name: "pinia",
     },
-    {
-      id: 3,
-      path: "/charts",
-      name: "图表",
-    }, {
+    // {
+    //   id: 3,
+    //   path: "/charts",
+    //   name: "图表",
+    // },
+     {
       id: 4,
       path: "/element",
       name: "表格",
