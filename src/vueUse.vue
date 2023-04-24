@@ -58,14 +58,23 @@ const sd = ref("123")
                 <el-button type="primary">查询</el-button>
             </el-col>
         </el-row>
+        <div>
+            <el-button @click="handleCase">级联选择器</el-button>
+        </div>
+        <caseCader v-if="flag"/>
     </div>
 </template>
 
 <script setup>
+import caseCader from './caseCader/index.vue';
 const txtSearch=ref('');
 const addrSearch=ref('');
 const tagsPopoverShowing=ref(true);
+const flag= ref(false)
 const checkedTags=ref([]);
+const handleCase =()=>{
+    flag.value=true;
+}
 const allTags=ref([
         { name: '豪华型', id: 0 },
         { name: '中型', id: 1 },
