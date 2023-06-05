@@ -1,13 +1,18 @@
 <template>
     <div class="map">
-        <div class="map_left"></div>
+        <div class="map_left">
+            <p @click="handleMark">添加跳动的点标记</p>
+            <p @click="handleDrag">添加拖拽的点标记</p>
+            <p @click="handleAggreNode">添加聚合点</p>
+
+        </div>
         <div class="map_right">
             <input type="text" id="suggestId" name="address_detail" placeholder="如门牌号等" v-model="address_detail"
                 class="input_style">
             <div id="map"></div>
             <div class="logo">
-                <div style="margin-left:12px"> 经度:<span>{{ userlocation.lng }}</span></div>
-                <div> 维度:<span>{{ userlocation.lat }}</span></div>
+                <div> 经度:<span class="lngClass">{{ userlocation.lng }}</span></div>
+                <div> 维度:<span class="latClass">{{ userlocation.lat }}</span></div>
             </div>
         </div>
     </div>
@@ -17,6 +22,7 @@
 import { reactive, toRefs, onMounted, nextTick } from "vue";
 import { useRoute } from "vue-router";
 import { MP } from "./getAkmap";
+
 export default {
     setup() {
         const state = reactive({
@@ -24,7 +30,7 @@ export default {
             address_detail: null, //详细地址
             userlocation: { lng: null, lat: null }
         });
-        const route =useRoute()
+        const route = useRoute()
         const updateMap = {
             initMap() {
                 //初始化地图
@@ -55,6 +61,52 @@ export default {
                 map.enableScrollWheelZoom();
             },
         };
+        const sm = {
+            /* 添加跳动的点 */
+            handleMark() {
+                let map = new BMap.Map("map");
+                map.centerAndZoom(new BMap.Point(114.26101136, 30.6195223), 15);
+                map.enableScrollWheelZoom(true);
+                let marker = new BMap.Marker(new BMap.Point(114.26101136, 30.6195223));
+                map.addOverlay(marker)
+                marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+                map.addEventListener('onmousemove', (e) => {
+                    setTimeout(() => {
+                        state.userlocation.lat = e.point.lat.toFixed(3)
+                        state.userlocation.lng = e.point.lng.toFixed(3)
+                    }, 1000);
+                    console.log(state.lat, state.lng, "first")
+                })
+            },
+            /* 添加拖拽 */
+            handleDrag(){
+                let map= new BMap.Map('map');
+                let point= new BMap.Point(114.225,30.602);
+                map.centerAndZoom(point,13);
+                map.enableScrollWheelZoom(true);
+                let marker = new BMap.Marker(point)//创建marker点;
+                map.addOverlay(marker)
+                marker.enableDragging()//可拖拽的方法
+                // marker.disableDragging()//不可拖拽的方法
+            },
+            /* 添加聚合点 */
+            handleAggreNode(){
+                let  map = new BMap.Map('map');
+                let point = new BMap.Point(116.404, 39.915)
+                map.centerAndZoom(point,5);
+                map.enableScrollWheelZoom();
+                let max= 10;
+                let markers= [];
+                let pt =null;
+                for(let i =0;i<max;i++){
+                    pt = new BMap.Point(Math.random()*40+85,Math.random()*30+21);
+                    markers.push(new BMap.Marker(pt));
+                    console.log(markers,'地图的聚合的点103****');
+                }
+                var markerClusterer = new BMapLib.MarkerClusterer(map, {markers:markers});
+                map.addOverlay(markerClusterer)
+            }
+        }
         onMounted(() => {
             nextTick(() => {
                 MP("WnRsQH38vo7AliTGD2ZwExyqTUYkw246").then((BMap) => {
@@ -129,12 +181,13 @@ export default {
                     }
                 });
             });
-            console.log(route.query.menuCode,'132***')
+            console.log(route.query.menuCode, '132***')
         });
         return {
             ...toRefs(state),
             ...updateMap,
-            ...route
+            ...route,
+            ...sm
         };
     },
 };
@@ -155,16 +208,37 @@ export default {
 
         #map {
             width: 100%;
-            height: 700px;
+            height: calc(100vh - 3.9rem);
         }
 
         .logo {
             position: absolute;
-            bottom: 25%;
-            left: 15%;
+            bottom: 1%;
+            width: 140px;
             font-size: 18px;
             font-weight: 700;
+
+            .lngClass {
+                display: inline-block;
+                padding-left: 0;
+            }
+
+            .latClass {
+                display: inline-block;
+                padding-left: 10px;
+            }
         }
+    }
+
+}
+
+::v-deep {
+    .BMap_cpyCtrl {
+        display: none;
+    }
+
+    .anchorBL {
+        display: none;
     }
 }
 </style>
