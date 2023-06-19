@@ -61,35 +61,170 @@ const sd = ref("123")
         <div>
             <el-button @click="handleCase">级联选择器</el-button>
         </div>
-        <caseCader v-if="flag"/>
+        <caseCader v-if="flag" />
+        <div id="main" style="width: 100%; height: 500px"></div>
     </div>
 </template>
 
 <script setup>
 import caseCader from './caseCader/index.vue';
-const txtSearch=ref('');
-const addrSearch=ref('');
-const tagsPopoverShowing=ref(true);
-const flag= ref(false)
-const checkedTags=ref([]);
-const handleCase =()=>{
-    flag.value=true;
+import { getCurrentInstance, ref } from 'vue';
+const { proxy } = getCurrentInstance()
+let myEcharts = proxy.$echarts;
+const txtSearch = ref('');
+const addrSearch = ref('');
+const tagsPopoverShowing = ref(true);
+const flag = ref(false)
+const checkedTags = ref([]);
+const handleCase = () => {
+    flag.value = true;
 }
-const allTags=ref([
-        { name: '豪华型', id: 0 },
-        { name: '中型', id: 1 },
-        { name: '混合动力车', id: 2 },
-        { name: '后驱', id: 3 },
-        { name: '汽油车', id: 4 },
-        { name: '奔驰', id: 5 },
-        { name: '跑车', id: 6 },
-        { name: '油耗高', id: 7 },
-        { name: '商用车', id: 8 },
-        { name: 'SUV', id: 9 },
-        { name: '前驱', id: 10 },
-        { name: '轿车', id: 11 }
-    ])
+const allTags = ref([
+    { name: '豪华型', id: 0 },
+    { name: '中型', id: 1 },
+    { name: '混合动力车', id: 2 },
+    { name: '后驱', id: 3 },
+    { name: '汽油车', id: 4 },
+    { name: '奔驰', id: 5 },
+    { name: '跑车', id: 6 },
+    { name: '油耗高', id: 7 },
+    { name: '商用车', id: 8 },
+    { name: 'SUV', id: 9 },
+    { name: '前驱', id: 10 },
+    { name: '轿车', id: 11 }
+])
 
+/* ------- 如何处理原始数据把它去重分类，集中在一个数组里面*/
+let arr = reactive([
+    { type: "M", xdata: "2023-06", LotType: "C", target: "200", wip: "200" },
+    { type: "M", xdata: "2023-06", LotType: "D", target: "200", wip: "400" },
+    { type: "M", xdata: "2023-06", LotType: "S", target: "200", wip: "400" },
+    { type: "D", xdata: "20230615", LotType: "D", target: "100", wip: "100" },
+    { type: "W", xdata: "202323", LotType: "D", target: "100", wip: "300" },
+    { type: "W", xdata: "202324", LotType: "D", target: "500", wip: "100" },
+    { type: "W", xdata: "202323", LotType: "S", target: "500", wip: "100" },
+    { type: "D", xdata: "20230617", LotType: "S", target: "100", wip: "400" },
+    { type: "D", xdata: "20230617", LotType: "P", target: "100", wip: "400" }
+]);
+const W = [];
+const D = [];
+const M = [];
+arr.map(i => {
+    if (i.type === "W") {
+        W.push(i);
+    }
+    if (i.type === "D") {
+        D.push(i);
+    }
+    if (i.type === "M") {
+        M.push(i);
+    }
+});
+function aa(data) {
+    return (data).map(({ LotType, wip }) => [LotType, wip])
+}
+let w1 = aa(W);
+let m1 = aa(M);
+let d1 = aa(D);
+// console.log(w1, m1, d1, '128****')
+const newData = [...w1, ...m1, ...d1];
+console.log(newData, '140新的融合数据')
+/* ------------- -------生成一个新的去重后的数据结束*/
+/* 数组转换[['D', '300'],['D', '100'],['S', '100'],['S', '400']]如何转换成[['D',['100','300']],['S',['100','400']]] */
+const zhuanMap = new Map();
+newData.forEach(([key, val]) => {
+    const values = zhuanMap.get(key) || [];
+    zhuanMap.set(key, [...values, val]);
+});
+const result = [...zhuanMap].map(([key, values]) => [key, values]);
+console.log(result, '152转换的数据')
+const arr1 = [{
+    name: "Plan", data: [800, 100, 700, 600],
+    type: "bar",
+    barWidth: 37.25,
+}];
+const resultss = result.reduce((acc, [key, values]) => {
+    const item = arr1.find(item => item.name === key);
+    if (item) {
+        acc.push({ name: item.name, type: "bar", stack: "stack", data: [...item.data, ...values] });
+    } else {
+        acc.push({
+            name: key, type: "bar",
+            data: values, stack: "stack", barWidth: 37.25
+        });
+    }
+    return acc;
+}, [...arr1]);
+
+console.log(resultss, '164****');
+
+
+/* x轴数据如何生成 ----------*/
+function fn3(tempArr) {
+    let result = [];
+    let obj = {};
+    for (let i = 0; i < tempArr.length; i++) {
+        if (!obj[tempArr[i].xdata]) {
+            result.push(tempArr[i]);
+            obj[tempArr[i].xdata] = true;
+        };
+    };
+    return result;
+};
+let xdata = fn3(arr).map(obj => obj.xdata);
+const compareStrNums = (a, b) => {
+    const numA = parseInt(a.replace(/\D/g, ''));
+    const numB = parseInt(b.replace(/\D/g, ''));
+    return numA - numB;
+}
+xdata.sort(compareStrNums);
+console.log(xdata, '134**X周数据')
+/* ---------- */
+onMounted(() => {
+    var myChart = myEcharts.init(document.getElementById('main'));
+    var option = {
+        color: ['#afabab', '#93beff', '#ffc63a', '#1d4edf', '#383b96'],
+        legend: {
+            right: 0
+        },
+        title: {
+            text: 'waferStart',
+            left: 'center'
+        },
+        grid: {
+            left: '4%',
+            right: '4%',
+            bottom: '5%',
+            top: '12%',
+            containLabel: true
+        },
+        xAxis: [
+            {
+                name: '月份',
+                type: 'category',
+                axisTick: {
+                    alignWithLabel: false
+                },
+                axisLabel: {
+                    padding: [25, 0, 0, 0]
+                },
+                data: xdata
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value',
+                axisLabel: {
+                    formatter: function (params) {
+                        return params + '%';
+                    }
+                }
+            }
+        ],
+        series: resultss
+    };
+    myChart.setOption(option);
+})
 </script>
 
 <style lang="scss" scoped>
@@ -188,4 +323,5 @@ const allTags=ref([
 .transition-popover-tb-leave-to {
     transform: translateY(-10px);
     opacity: 0;
-}</style>
+}
+</style>
