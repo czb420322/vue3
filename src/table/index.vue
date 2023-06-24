@@ -1,9 +1,8 @@
 <!-- 项目的子组件 封装后的表格、分页 -->
 <!-- 表格数据 Start-->
 <template>
-    <el-table :data="
-        tableData.slice((currentPage - 1) * pageSize, currentPage * pageSize)
-    " height="800" style="width: 100%" border>
+    <el-table :data="tableData.slice((currentPage - 1) * pageSize, currentPage * pageSize)
+        " style="width: 100%;overflow: auto;" border>
         <!-- 循环表头 template是不会渲染为dom 在小程序中是block  -->
         <template v-for="(item, index) in tableHeader" :key="index">
             <el-table-column :prop="item.prop" :label="item.label" :align="item.align || 'center'"
@@ -43,7 +42,7 @@
                     encryptionPhone(scope.row)
                 }}</template>
                 <!-- 自定义列 按钮 -->
-                <template #default="scope" v-if="item.dataType === 'operate'">
+                <template #default="scope" v-if="item.dataType === 'operate'" :width="200 * unit">
                     <el-button size="small" @click="handleEdit(scope.$index, scope.row)">Edit</el-button>
                     <el-button size="small" type="danger" @click="handleDelete(scope.$index, scope.row)">Delete</el-button>
                     <el-button size="small" @click="handleEdit(scope.$index, scope.row)">Edit</el-button>
@@ -68,8 +67,8 @@
         @current-change="handleCurrentChange" />
     <transition name="el-zoom-in-bottom">
         <div v-show="isTrans" class="transition-box">
-            <transitionVue v-bind="newObj"  @handleDom="handleDom"  @handleCurrentChange="handleCurrentChange"
-            @handleSizeChange="handleSizeChange"/>
+            <transitionVue v-bind="newObj" @handleDom="handleDom" @handleCurrentChange="handleCurrentChange"
+                @handleSizeChange="handleSizeChange" />
         </div>
     </transition>
 </template>
@@ -85,6 +84,7 @@ import transitionVue from './transition.vue'
 const user = useCounterStore()
 const { isDialog, isTrans } = storeToRefs(user)
 console.log(isDialog, isTrans, user, '87**')
+const unit = ref(0)
 const props = defineProps({
     // 表格显示的数据
     tableData: {
@@ -142,8 +142,8 @@ const props = defineProps({
         default: 10,
     },
 });
-const newObj =props
-console.log(newObj,'145***')
+const newObj = props
+console.log(newObj, '145***')
 const emits = defineEmits([
     "handleSizeChange",
     "handleCurrentChange",
@@ -223,6 +223,8 @@ const encryptionTime = (row) => {
 
 
 onMounted(() => {
+    unit.value = document.body.clientWidth / 1920;
+    console.log(unit, '228**')
     // console.log("！这里输出😂👨🏾‍❤️‍👨🏼==>： ", props.tableData);
     // console.log("表格🚀", props.tableData, props.tableHeader, props.isOperate);
     // console.log("页容量🚀", props.total);
@@ -277,5 +279,9 @@ onMounted(() => {
     padding: 40px 20px;
     box-sizing: border-box;
     margin-right: 20px;
+}
+
+.el-button {
+    padding: 0.07rem;
 }
 </style>

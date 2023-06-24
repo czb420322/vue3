@@ -1,9 +1,8 @@
 <template>
-    <div class="bigDialog" id="bigDialog">
+    <!-- <div class="bigDialog" id="bigDialog">
         <Close class="close animated" @click="handleClose" />
         dsbijfhweijhiewhiuuewuiogjiwoeujiuoiujio
-
-    </div>
+    </div> -->
     <!-- <el-dialog class="bigDialog" @open="handleOpen" v-model="sliderDialogVisible" title="弹窗" width="30%" center>
         <div>
             弹窗的主页面,需要使用的方法以已经注册到全局的main.js
@@ -20,17 +19,18 @@
 </template>
 
 <script setup>
-const emit = defineEmits(['hclose'])
+import { useCounterStore } from '../store/index';
+const emits = defineEmits(['handleClose'])
+const store = useCounterStore()
 const handleOpen = () => { };
 const handleClose = () => {
-    let aa = document.getElementById('bigDialog');
-    console.log(aa, '27***')
-    emit('hclose', false)
+emits('handleClose',false)
 }
 </script>
 
 <style lang="scss" scoped>
 @import url("@/assets/css/animate.css");
+
 .bigDialog {
     position: absolute;
     height: 100%;
@@ -50,4 +50,5 @@ const handleClose = () => {
         right: 0;
         cursor: pointer;
     }
-}</style>
+}
+</style>

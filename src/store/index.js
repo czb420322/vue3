@@ -23,6 +23,10 @@ export const useCounterStore = defineStore('counter', {
         changeDialog() {
             this.isDialog = true
         },
+        //关闭dialog
+        closeDialog(){
+            this.isDialog=false
+        },
         changeTrans(){
             this.isTrans = true
         },

@@ -15,10 +15,10 @@ const store = useCounterStore()
 const { count } = storeToRefs(store)
 const nums = ref(null);
 const handleBtn = () => {
-    if (nums.value !== null && nums.value !== undefined && nums.value !== '') {
-        console.log("19first")
-    }
-    if ((nums.value ?? '') !== '') {
+    // if (nums.value !== null && nums.value !== undefined && nums.value !== '') {
+    //     console.log("19first")
+    // }
+    if ((nums.value ?? '') === '') {
         console.log("22first")
     }
 }
