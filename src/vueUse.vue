@@ -1,80 +1,19 @@
-<!-- <template>
-    <div>
-        {{ sd }}
-    </div>
-</template>
-
-<script setup>
-const sd = ref("123")
-</script>
-
-<style lang="scss" scoped>
-
-</style> -->
-
 <template>
     <div class="query-wrapper">
-        <el-row type="flex" justify="space-between">
-            <el-col :span="5">
-                <span class="query-label">关键字：</span>
-                <el-input v-model="txtSearch" placeholder="请输入关键字" clearable />
-            </el-col>
-            <el-col :span="5" style="align-items: flex-start">
-                <span class="query-label">标签：</span>
-                <el-popover ref="popoverTags" v-scoped="this" placement="bottom-start" transition="transition-popover-tb"
-                    :visible-arrow="true" popper-class="popover-tags" width="201" trigger="click"
-                    @show="tagsPopoverShowing = true" @hide="tagsPopoverShowing = false">
-                    <div style="">
-                        <el-checkbox-group v-model="checkedTags">
-                            <el-checkbox v-for="(tag) in allTags" :key="tag.id" :label="tag.id" class="tag-item">{{ tag.name
-                            }}</el-checkbox>
-                        </el-checkbox-group>
-                    </div>
-                    <el-button slot="reference" class="dis-btn-hover">
-                        <!-- <span style="font-weight: bold; margin-right: 8px;">标签</span> -->
-                        <div style="display:inline-block; width: 100px;">
-                            <span v-show="!checkedTags || checkedTags.length === 0" style="color: var(--color-fontb9)">
-                                请选择
-                            </span>
-                            <span v-show="checkedTags && checkedTags.length > 0">
-                                <span style="">已选</span>
-                                <span> ( {{ checkedTags.length }} ) </span>
-                                <!-- <span class="blue-badge">{{ checkedTags.length }}</span> -->
-                            </span>
-                        </div>
-                        <i v-if="checkedTags && checkedTags.length > 0" class="el-icon-circle-close tag-popover-close"
-                            style="margin-left: 12px;" @click.stop="checkedTags = []" />
-                        <i v-else class="el-icon-arrow-down tag-popover-arrow" :class="{ 'opening': tagsPopoverShowing }"
-                            style="margin-left: 12px;" />
-                    </el-button>
-                </el-popover>
-            </el-col>
-            <el-col :span="6">
-                <span class="query-label">地址：</span>
-                <el-input v-model="addrSearch" placeholder="模糊匹配地址" clearable />
-            </el-col>
-            <el-col :span="3" style="align-items: flex-start">
-                <span class="query-label">&nbsp;</span>
-                <el-button type="primary">查询</el-button>
-            </el-col>
-        </el-row>
-        <div>
-            <el-button @click="handleCase">级联选择器</el-button>
-        </div>
-        <caseCader v-if="flag" />
         <div id="main" style="width: 100%; height: 500px"></div>
+    </div>
+    <div class="query-wrapper">
+        <div id="mains" style="width: 100%; height: 500px"></div>
     </div>
 </template>
 
 <script setup>
-import caseCader from './caseCader/index.vue';
 import { getCurrentInstance, ref } from 'vue';
 const { proxy } = getCurrentInstance()
 let myEcharts = proxy.$echarts;
 const txtSearch = ref('');
 const addrSearch = ref('');
 const tagsPopoverShowing = ref(true);
-const flag = ref(false)
 const checkedTags = ref([]);
 const handleCase = () => {
     flag.value = true;
@@ -179,6 +118,120 @@ const compareStrNums = (a, b) => {
 }
 xdata.sort(compareStrNums);
 console.log(xdata, '134**X周数据')
+function getPie() {
+    const data = [{
+        'name': '涉疆',
+        'value': 50
+    }, {
+        'name': '涉赌',
+        'value': 150
+    }, {
+        'name': '涉娼',
+        'value': 80
+    }, {
+        'name': '黑灰产',
+        'value': 260
+    }, {
+        'name': '涉毒',
+        'value': 150
+    }, {
+        'name': '涉稳',
+        'value': 140
+    }]
+    let color = ['RGBA(255, 143, 100, 1)', 'RGBA(174, 212, 252, 1)', 'RGBA(255, 205, 98, 1)', 'RGBA(96, 122, 209, 1)', 'RGBA(80, 205, 124, 1)', 'RGBA(245, 212, 56, 1)']
+    const option = {
+        color: color,
+        tooltip: {
+            trigger: 'item'
+        },
+        // legend: {
+        //   bottom: '20%', 
+        //   itemWidth: 10, 
+        //   itemHeight: 10, 
+        // //   icon: 'square',
+        //   itemGap: 40,
+        //   textStyle: {
+        //     color: 'rgba(68, 68, 69, 1)',
+        //     fontSize: '14',
+        //   },
+        // },
+        legend: { // 图例配置
+            orient: 'vertical', // 图例布局，可以设置为 'horizontal' 或 'vertical'
+            left: 'left', // 图例距离容器左侧的距离
+            /* 这个只有文字加数据 */
+            // formatter: function (name) {
+            //     // 在图例后面添加名称和对应数据展示
+            //     var dataValue = option.series[0].data.find(function (item) {
+            //         return item.name === name;
+            //     }).value;
+            //     return name + '：' + dataValue;
+            // }
+
+            /* 这个只有文字加数据 以及百分比的*/
+            formatter: function (name) {
+          // 在图例后面添加名称、对应数据展示和百分比
+          var seriesData = option.series[0].data;
+          var total = seriesData.reduce(function (accumulator, currentValue) {
+            return accumulator + currentValue.value;
+          }, 0);
+          var dataItem = seriesData.find(function (item) {
+            return item.name === name;
+          });
+          var dataValue = dataItem.value;
+          var percentage = ((dataValue / total) * 100).toFixed(2); // 计算百分比，保留两位小数
+          return name + '：' +  '（占比：' + percentage + '%）'+dataValue ;
+        }
+            // data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
+        },
+        series: [
+            {
+                type: 'pie',
+                data: data,
+                center: ['50%', '50%'],
+                radius: ['30%', '45%'],
+                itemStyle: {
+                    normal: {
+                        label: {
+                            show: true,
+                            position: 'outside',
+                            color: color.map(item => {
+                                return item
+                            }),
+                            // padding: [0, -100, 0, -100],
+                            fontSize: 13,
+                            formatter: function (params) {
+                                if (params.name !== '') {
+                                    return '{name|' + params.name + '}';
+                                } else {
+                                    return '';
+                                }
+
+                            },
+                            rich: {
+                                name: {
+                                    color: "rgba(137, 150, 180, 1)",
+                                    fontSize: 14,
+                                    align: 'center',
+                                    padding: [0, -100, 22, -100],
+                                },
+                            }
+                        },
+                        labelLine: {
+                            length: 27,
+                            length2: 70,
+                            show: true,
+                            color: '#00ffff'
+                        }
+                    }
+                },
+                name: '',
+                hoverAnimation: false,
+            }
+        ]
+    };
+    var myChart = myEcharts.init(document.getElementById('mains'));
+    myChart.setOption(option);
+}
 /* ---------- */
 onMounted(() => {
     var myChart = myEcharts.init(document.getElementById('main'));
@@ -224,7 +277,10 @@ onMounted(() => {
         series: resultss
     };
     myChart.setOption(option);
+    getPie()
 })
+
+
 </script>
 
 <style lang="scss" scoped>

@@ -38,6 +38,12 @@ const routes = [
     path:'/animate',
     name:'animate',
     component:()=>import('../animate.vue')
+  },{
+    path:'/componentcommunication',
+    name:'componentcommunication',
+    component:()=>import('../componentCommunication/index.vue')
+  },{
+    path:'/'
   }
 ]
 

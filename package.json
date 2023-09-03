@@ -19,9 +19,11 @@
     "lodash": "^4.17.21",
     "node-sass": "^6.0.1",
     "pinia": "^2.0.14",
+    "sass": "^1.63.6",
     "sass-loader": "^10.2.0",
     "vue": "^3.2.25",
-    "vue-router": "^4.0.14"
+    "vue-router": "^4.0.14",
+    "ws": "^8.13.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.2.0",
