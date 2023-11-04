@@ -1,11 +1,12 @@
 /* pinia的组合式 */
 import { defineStore } from "pinia"
-import { reactive, computed } from "vue"
+import { reactive, ref, computed } from "vue"
 export const useCartStore = defineStore("carts", () => {
     // ref 变量  --->  state
     // computed() 计算属性  --->  getters 
     // functions 函数  --->  actions
     let cartList = reactive([])
+    let goods = ref([])
     const addCartNum = (goods) => {
         let _index = -1;
         cartList.forEach((i, j) => {
@@ -37,10 +38,12 @@ export const useCartStore = defineStore("carts", () => {
         })
         return _allNum
     })
+
     return {
         cartList,
         addCartNum,
         minusCartNum,
-        allNum
+        allNum,
+        goods,
     }
 })

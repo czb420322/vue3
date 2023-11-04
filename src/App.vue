@@ -5,9 +5,9 @@
         item.name
       }}</router-link>
     <!--分页组件显示中文名称需要在此处引入包裹 -->
-    <el-config-provider :locale="zhCn">
+    <!-- <el-config-provider :locale="zhCn"> -->
       <router-view></router-view>
-    </el-config-provider>
+    <!-- </el-config-provider> -->
   </div>
   <!-- <h1>{{ msg }}</h1> :class='now==item.id?"active":""'
   <h1>{{ revseMsg(msg) }}</h1>
@@ -15,7 +15,7 @@
   <img alt="Vue logo" src="./assets/logo.png" /> -->
 </template>
 <script setup>
-import zhCn from "element-plus/lib/locale/lang/zh-cn"
+// import zhCn from "element-plus/lib/locale/lang/zh-cn"
 import { ref, reactive } from "vue";
 const now = ref(1);
 let msg = ref("老城主帅!");
@@ -67,6 +67,10 @@ const sd = reactive({
       id:8,
       path:'/animate',
       name:'animate'
+    },{
+      id:9,
+      path:'/searchHight',
+      name:'searchHight'
     }
   ],
 });

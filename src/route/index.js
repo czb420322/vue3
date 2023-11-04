@@ -43,7 +43,9 @@ const routes = [
     name:'componentcommunication',
     component:()=>import('../componentCommunication/index.vue')
   },{
-    path:'/'
+    path:'/searchHight',
+    name:'searchHight',
+    component:()=>import('../searchHight.vue')
   }
 ]
 

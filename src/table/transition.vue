@@ -6,9 +6,8 @@
                     <CloseBold class="blod" />
                 </div>
                 <div>
-                    <el-table :data="
-                        tableDatas.slice((currentPage - 1) * pageSize, currentPage * pageSize)
-                    " height="800" style="width: 100%" border>
+                    <el-table :data="tableDatas.slice((currentPage - 1) * pageSize, currentPage * pageSize)
+                        " height="630" style="width: 100%" border>
                         <!-- 循环表头 template是不会渲染为dom 在小程序中是block  -->
                         <template v-for="(item, index) in tableHeader" :key="index">
                             <el-table-column :prop="item.prop" :label="item.label" :align="item.align || 'center'"
