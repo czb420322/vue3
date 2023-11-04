@@ -40,18 +40,18 @@ const { count } = storeToRefs(store)
 const router = useRouter()
 const route = useRoute()
 onMounted(() => {
-  if (isStructuredCloneSupported()) {
-    // 支持structuredClone函数，可以进行深拷贝操作
-    deepClone(obj);
-  } else {
-    // 不支持structuredClone函数，需要使用其他方式进行深拷贝
-    // 例如使用lodash的cloneDeep方法或fast-copy库等
-    // ...
-  }
+  // if (isStructuredCloneSupported()) {
+  //   // 支持structuredClone函数，可以进行深拷贝操作
+  //   deepClone(obj);
+  // } else {
+  //   // 不支持structuredClone函数，需要使用其他方式进行深拷贝
+  //   // 例如使用lodash的cloneDeep方法或fast-copy库等
+  //   // ...
+  // }
   console.log(route.name, '24**')
 })
 let obj = reactive({
-
+name:"张三"
 })
 
 function isStructuredCloneSupported() {
@@ -107,7 +107,6 @@ function routingJump(route_name) {
     activity: () => console.log("监听某些事"),
     help: () => console.log("......")
   }
-
   if (map[route_name]) {
     map[route_name](); // <-------------------这里要改为调用函数
   } else {
@@ -117,7 +116,7 @@ function routingJump(route_name) {
 
 routingJump('shop'); // 生成随机数
 
-function routingJump(route_name) {
+function routingJumps(route_name) {
 
   const map = [
     [
@@ -151,7 +150,7 @@ function routingJump(route_name) {
   }
 }
 
-routingJump('activity'); // 跳转活动页
+routingJumps('activity'); // 跳转活动页
 
 
 </script>

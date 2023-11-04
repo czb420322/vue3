@@ -1,10 +1,11 @@
 <template>
-    <div>
+
+    <div class="hightLight">
         <div style="
           width: 84%;
           margin: 0 16%;
           position: fixed;
-          top: 0px;
+          top: 0;
           height: 50px;
           background-color: #e6e6e6;
           line-height: 50px;
@@ -705,6 +706,11 @@ export default {
 </script>
   
 <style scoped>
+.hightLight{
+    position: relative;
+    height: calc(100% - 120px);
+    border: 1px solid red;
+}
 .left-tools {
     position: fixed;
     height: 100vh;

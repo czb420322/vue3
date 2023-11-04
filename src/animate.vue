@@ -1,6 +1,5 @@
 <template>
     <div>
-
         <h1 class="animated" ><strong>animate.css的各种效果</strong></h1>
         <div>----------------------------------------------关注者(Attention
             Seekers)----------------------------------------------</div>
