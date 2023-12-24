@@ -2,6 +2,8 @@
     <div>
         <newShake />
         {{ count }}
+        <input type="text" name="" id="input" autocomplete="off">
+        <button @click="copyButton">复制</button>
         <el-input v-model="nums" />
         <el-button @click="handleBtn">确 定</el-button>
     </div>
@@ -148,6 +150,45 @@ const tableDatas = ref([{
     age: 18,
     address: "紫禁城"
 }]);
+/**
+* 复制函数
+* @param { string } text 需要复制的文本内容
+* @returns { void }
+*/
+function copyToClipboard(text) {
+    // 看当前需求，如果用户没有输入内容也能复制的话，就将 button 元素的 disabled 属性去掉，用户复制的就是空串；
+    // 还有一种就是不禁用按钮，但是当用户没有输入内容就去点击复制的话，我们可以去给用户一个提示；
+
+    // 创建元素
+    const copyFrom = document.createElement('textarea');
+    // 设置元素的内容
+    copyFrom.value = text;
+    // 将创建的元素添加到body中
+    document.body.appendChild(copyFrom);
+    // 选中元素
+    copyFrom.select();
+    // 执行复制命令，将文本添加到用户的剪贴板
+    document.execCommand('copy');
+    // 删除创建的元素
+    document.body.removeChild(copyFrom);
+}
+function copyButton() {
+    // // 获取 input 元素
+    const input = document.querySelector('#input');
+
+    // // 获取 button 按钮
+    // const btn = document.querySelector('button');
+
+    // // 给 button 元素 绑定事件
+    // btn.addEventListener('click', () => {
+        copyToClipboard(input.value);
+        alert('复制成功！');
+    // });
+}
+
+
+
+
 async function generateExcel() {
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet('Sheet1');

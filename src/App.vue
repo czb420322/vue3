@@ -72,6 +72,11 @@ const sd = reactive({
       path:'/searchHight',
       name:'searchHight'
     }
+    ,{
+      id:10,
+      path:'/echratsTable',
+      name:'echratsTable'
+    }
   ],
 });
 </script>
