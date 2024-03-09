@@ -2,13 +2,14 @@
   <div>
     <router-link @click="handleClick(item.id)" :class='{ "active": now == item.id }' v-for="item in sd.list"
       :to="item.path">{{
-        item.name
-      }}</router-link>
+      item.name
+    }}</router-link>
     <!--分页组件显示中文名称需要在此处引入包裹 -->
     <!-- <el-config-provider :locale="zhCn"> -->
-      <router-view></router-view>
+
     <!-- </el-config-provider> -->
   </div>
+  <router-view></router-view>
   <!-- <h1>{{ msg }}</h1> :class='now==item.id?"active":""'
   <h1>{{ revseMsg(msg) }}</h1>
   <button @click="setMsg">点击修改</button>
@@ -47,7 +48,7 @@ const sd = reactive({
       path: "/componentcommunication",
       name: "webSocket通信",
     },
-     {
+    {
       id: 4,
       path: "/element",
       name: "表格",
@@ -63,19 +64,24 @@ const sd = reactive({
       id: 7,
       path: '/vueTable',
       name: 'vueTable'
-    },{
-      id:8,
-      path:'/animate',
-      name:'animate'
-    },{
-      id:9,
-      path:'/searchHight',
-      name:'searchHight'
+    }, {
+      id: 8,
+      path: '/animate',
+      name: 'animate'
+    }, {
+      id: 9,
+      path: '/searchHight',
+      name: 'searchHight'
     }
-    ,{
-      id:10,
-      path:'/echratsTable',
-      name:'echratsTable'
+    , {
+      id: 10,
+      path: '/echratsTable',
+      name: 'echratsTable'
+    }
+    , {
+      id: 11,
+      path: '/elMain',
+      name: 'elMain'
     }
   ],
 });
@@ -108,4 +114,5 @@ const sd = reactive({
 svg {
   width: 1em;
   height: 1em;
-}</style>
+}
+</style>

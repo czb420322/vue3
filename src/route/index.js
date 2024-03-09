@@ -50,6 +50,11 @@ const routes = [
     path: '/echratsTable',
     name: 'echratsTable',
     component: () => import('../echartsTable.vue')
+  
+  }, {
+    path: '/elMain',
+    name: 'elMain',
+    component: () => import('../elMain.vue')
   }
 ]
 
